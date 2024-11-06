@@ -1,0 +1,48 @@
+@import url("https://feralcreative.dev/utils.min.css");
+:root {
+  font: 400 16px/1.2em !important;
+}
+
+body,
+html {
+  /* Color Variables */
+  --e-global-color-primary: $primary; /* Default Primary Color */
+  --e-global-color-secondary: $secondary; /* Default Secondary Color */
+  --e-global-color-text: $text; /* Default Text Color */
+  --e-global-color-heading: $heading; /* Default Heading Color */
+  --e-global-color-light: $light; /* Default Light Color */
+  --e-global-color-dark: $dark; /* Default Dark Color */
+  --e-global-color-accent: $accent; /* Default Accent Color */
+  --e-global-color-background: $white; /* Default Background Color */
+  --e-global-color-border: #e0e0e0; /* Default Border Color */
+  /* Typography Variables */
+  --e-global-typography-primary-font-family: $headline;
+  --e-global-typography-primary-font-size: 16px; /* Default Primary Font Size */
+  --e-global-typography-primary-font-weight: 400; /* Default Primary Font Weight */
+  --e-global-typography-primary-line-height: 1.5; /* Default Primary Line Height */
+  --e-global-typography-primary-letter-spacing: 0; /* Default Primary Letter Spacing */
+  --e-global-typography-secondary-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Default Secondary Font Family */
+  --e-global-typography-secondary-font-size: 14px; /* Default Secondary Font Size */
+  --e-global-typography-secondary-font-weight: 400; /* Default Secondary Font Weight */
+  --e-global-typography-secondary-line-height: 1.5; /* Default Secondary Line Height */
+  --e-global-typography-secondary-letter-spacing: 0; /* Default Secondary Letter Spacing */
+  /* Button Variables */
+  --e-global-button-font-family: $button;
+  --e-global-button-font-size: 14px; /* Default Button Font Size */
+  --e-global-button-font-weight: 600; /* Default Button Font Weight */
+  --e-global-button-line-height: 1.5; /* Default Button Line Height */
+  --e-global-button-letter-spacing: 0; /* Default Button Letter Spacing */
+  --e-global-button-padding: 10px 20px; /* Default Button Padding */
+  /* Spacing Variables */
+  --e-global-spacing-unit: px; /* Default Spacing Unit */
+  --e-global-spacing-small: 5px; /* Default Small Spacing */
+  --e-global-spacing-medium: 15px; /* Default Medium Spacing */
+  --e-global-spacing-large: 30px; /* Default Large Spacing */
+  /* Other Variables */
+  --e-global-border-radius: 5px; /* Default Border Radius */
+  --e-global-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Default Box Shadow */
+  --e-global-z-index: 10; /* Default Z-Index */
+  /* Responsive Variables */
+  --e-global-breakpoint-tablet: 768px; /* Default Tablet Breakpoint */
+  --e-global-breakpoint-mobile: 480px; /* Default Mobile Breakpoint */
+}

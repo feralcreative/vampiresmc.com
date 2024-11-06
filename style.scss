@@ -1,0 +1,49 @@
+@charset "UTF-8";
+/*!
+Theme Name: Vampires MC    
+Description: Vampires MC is a child theme of Hello Elementor, created by Feral Creative
+Author: Feral Creative
+Author URI: https://feralcreative.co
+Template: hello-elementor
+Version: 2024.11.04.1818
+Text Domain: vampires-mc
+License: ©2024 Feral Creative. All rights reserved.
+*/
+
+@import "./sass/variables";
+@import "./sass/typography";
+@import "./sass/header";
+@import "./sass/footer";
+@import "./sass/sections";
+@import "./sass/hero";
+@import "./sass/interactive";
+
+@import "./sass/temp";
+
+/// REMOVE BEFORE FLIGHT
+
+//! @import url("https://feralcreative.dev/utils.min.css");
+//! @import "./sass/";
+
+/// REMOVE BEFORE FLIGHT
+
+//@ GENERAL
+body {
+  background-color: $black;
+}
+
+//@ DESKTOP ONLY
+@media (min-width: 1025px) {
+}
+
+//@ TABLET ONLY
+@media (min-width: 768px) and (max-width: 1024px) {
+}
+
+//@ TABLET AND SMALLER
+@media (max-width: 1024px) {
+}
+
+//@ MOBILE
+@media (max-width: 767px) {
+}

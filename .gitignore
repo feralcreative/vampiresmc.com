@@ -1,0 +1,16 @@
+**/.DS_Store
+**/_assets
+**/_archive
+**/_*
+**/*.psd
+**/*.ai
+**/*.prproj
+**/*.aep
+**/*.mp4
+**/*.mov
+**/*.mkv
+wp-includes
+wp-admin
+wp-content/cache
+wp-content/languages
+wp-content/plugins
