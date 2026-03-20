@@ -1,0 +1,119 @@
+// ============================================
+// HEADER
+// ============================================
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  height: $header-height;
+  transition: background $duration $ease-out,
+              box-shadow $duration $ease-out;
+
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 $container-pad;
+  height: 100%;
+}
+
+// ============================================
+// SUBWAY NAV
+// ============================================
+
+$pip-size: 6px;
+$pip-size-active: 10px;
+
+.scroll-dots {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 600px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: calc($pip-size / 2 - 0.5px);
+    height: 1px;
+    background: rgba($color-accent, 0.35);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 10%;
+    bottom: calc($pip-size / 2 - 0.5px);
+    height: 1px;
+    width: calc(var(--progress, 0) * 80%);
+    background: $color-accent-hover;
+    z-index: 0;
+    pointer-events: none;
+    transition: width $duration $ease-out;
+  }
+}
+
+.scroll-dot {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-accent;
+  transition: color $duration $ease-out;
+
+  &:hover {
+    color: $color-accent-hover;
+  }
+
+  &.active {
+    color: $color-accent-hover;
+  }
+}
+
+.scroll-dot-label {
+  font-family: $font-heading;
+  font-size: $fs-xs;
+  font-weight: $fw-semi;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1;
+
+  //@ Mobile — hide labels, keep pips only
+  @media (max-width: $bp-sm) {
+    display: none;
+  }
+}
+
+.scroll-dot-pip {
+  position: relative;
+  z-index: 1;
+  width: $pip-size;
+  height: $pip-size;
+  border-radius: 50%;
+  background: $color-accent;
+  flex-shrink: 0;
+  transition: background $duration $ease-out,
+              width $duration $ease-out,
+              height $duration $ease-out;
+
+  .scroll-dot.active & {
+    width: $pip-size-active;
+    height: $pip-size-active;
+    background: $color-accent-hover;
+    margin-bottom: calc(($pip-size - $pip-size-active) / 2);
+  }
+}

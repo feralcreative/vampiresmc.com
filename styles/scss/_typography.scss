@@ -1,0 +1,55 @@
+// ============================================
+// TYPOGRAPHY
+// ============================================
+
+body {
+  font-family: $font-body;
+  font-size: $fs-base;
+  font-weight: $fw-light;
+  line-height: $lh-normal;
+  color: $color-text;
+  background-color: $color-bg;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-heading;
+  font-weight: $fw-bold;
+  line-height: $lh-tight;
+  letter-spacing: -0.02em;
+  text-shadow: 1px 1px 2px black;
+}
+
+h1 {
+  font-size: $fs-hero;
+  font-weight: $fw-thin;
+}
+h2 {
+  font-size: clamp($fs-2xl, 4vw, $fs-3xl);
+}
+h3 {
+  font-size: $fs-xl;
+}
+
+p + p {
+  margin-top: $space-sm;
+}
+
+.section-title {
+  margin-bottom: $space-md;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 2px;
+    margin-top: $space-xs;
+    background: $color-accent;
+  }
+}

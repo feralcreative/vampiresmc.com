@@ -92,14 +92,16 @@ Admin styles (`admin.scss`) import external utility CSS from `feralcreative.dev/
 
 | Decision     | Choice                                                             |
 | ------------ | ------------------------------------------------------------------ |
-| Platform     | Pure HTML/CSS/JS — no framework, no CMS, no build step             |
+| Platform     | Static HTML/CSS/JS — no framework, no CMS, no build step           |
 | Layout       | Single-page with anchor navigation (same structure as current)     |
 | Events       | Link to Facebook events page (API is locked to Marketing Partners) |
 | Forum        | Remove entirely                                                    |
-| Branding     | Full redesign (not carrying over current Kanit/black/red theme)    |
+| Branding     | Full redesign — dark theme, Space Grotesk + Inter, amber accent    |
 | Contact form | TBD — user will decide later                                       |
 | Stylesheets  | SCSS compiled via VS Code Live Sass Compile                        |
-| JavaScript   | Vanilla JS only, no jQuery                                         |
+| JavaScript   | Vanilla JS, no jQuery                                              |
+| Animation    | GSAP 3 + ScrollTrigger (CDN)                                       |
+| Scroll       | Lenis smooth scroll (CDN)                                          |
 
 ### Facebook Events API Note
 

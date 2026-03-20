@@ -1,0 +1,115 @@
+// ============================================
+// PANEL SYSTEM (shared by all full-bleed sections)
+// ============================================
+
+.scroll-container {
+  display: flex;
+  height: 100vh;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+
+  // Hide scrollbar
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.panel {
+  position: relative;
+  width: 100vw;
+  min-width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Full-bleed background image
+.panel-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  // Per-panel focus points — adjust horizontal % to reframe the subject
+  .hero & img {
+    object-position: 70% 0%;
+  }
+  .about & img {
+    object-position: 50% center;
+  }
+  .events & img {
+    object-position: 50% center;
+  }
+  .contact & img {
+    object-position: 95% center;
+  }
+
+  // Dark overlay
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+  }
+}
+
+// Content sits above panel-bg
+.panel > .container,
+.panel > .hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+// ============================================
+// HERO
+// ============================================
+
+.hero {
+  // Accent gradient on top of the dark overlay
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center bottom, rgba($color-accent, 0.08) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 2;
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $space-sm;
+  font-size: $fs-hero;
+}
+
+.hero-title-line {
+  display: block;
+}
+
+.hero-subtitle {
+  font-family: $font-heading;
+  font-size: $fs-lg;
+  font-weight: $fw-regular;
+  color: $color-text-muted;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}

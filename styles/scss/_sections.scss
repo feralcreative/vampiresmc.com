@@ -1,0 +1,98 @@
+// ============================================
+// SECTIONS (About, Events, Contact)
+// ============================================
+
+.container {
+  max-width: $container-hmax;
+  max-height: $container-vmax;
+  margin: 0 auto;
+  padding: 0 $container-pad;
+  border: 2px solid green;
+}
+
+.section {
+  padding: $space-xl 0;
+
+  //@ Desktop — more vertical space
+  @media (min-width: $bp-md) {
+    padding: $space-2xl 0;
+  }
+
+  // Inside a panel — pin content to bottom third
+  &.panel {
+    padding: 20vh 5vw 5vh 5vw;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    > .container {
+      padding-bottom: calc(#{$space-xl} + 5vh);
+      position: relative;
+      z-index: 2;
+    }
+
+    // Replace flat overlay with a gradient that fades out over 50vh
+    .panel-bg::after {
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.88) 0%,
+        rgba(0, 0, 0, 0.6) 25%,
+        rgba(0, 0, 0, 0.5) 100%,
+        transparent 50%
+      );
+    }
+  }
+}
+
+// About
+.about-content {
+  max-width: 720px;
+  font-size: $fs-md;
+  color: $color-text-muted;
+  line-height: $lh-snug;
+  font-weight: $fw-regular;
+}
+
+// Events
+.events {
+  background: $color-bg-alt;
+}
+
+.events-text {
+  max-width: 600px;
+  font-size: $fs-lg;
+  color: $color-text-muted;
+  margin-bottom: $space-md;
+}
+
+// CTA Button
+.btn {
+  display: inline-block;
+  font-family: $font-heading;
+  font-size: $fs-sm;
+  font-weight: $fw-semi;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 1rem 2.5rem;
+  border: 1px solid transparent;
+  transition: all $duration $ease-out;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: rgba($color-black, 0.5);
+  color: $color-accent-hover;
+  border: 1px solid $color-accent;
+
+  &:hover {
+    background: $color-accent-hover;
+    color: white;
+    transform: translateY(-1px);
+  }
+}
+
+// Contact
+.contact-text {
+  max-width: 600px;
+  font-size: $fs-lg;
+  color: $color-text-muted;
+}
