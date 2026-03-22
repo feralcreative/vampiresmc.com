@@ -1,6 +1,9 @@
 # Vampires MC — Website
 
-Brochure site for [Vampires Motorcycle Club](https://www.facebook.com/vampiresmc), founded 1954. Chapters in Santa Cruz, San Francisco, and San Luis Obispo, CA.
+[![Production](https://img.shields.io/badge/live-vampiresmc.com-cc0000?style=flat-square)](https://vampiresmc.com)
+[![Staging](https://img.shields.io/badge/staging-stage.vampiresmc.com-555?style=flat-square)](https://stage.vampiresmc.com)
+
+Public site for [Vampires Motorcycle Club](https://www.facebook.com/vampiresmc), founded 1954. Chapters in Santa Cruz, San Francisco, and San Luis Obispo, CA.
 
 ## Stack
 
