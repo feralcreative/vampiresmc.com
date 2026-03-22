@@ -1,13 +1,37 @@
 // ============================================
-// SECTIONS (About, Events, Contact)
+// SECTIONS — shared layout & components
 // ============================================
 
+.header {
+  .social {
+    display: flex;
+    position: fixed;
+    gap: 10px;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+  }
+  &.logo {
+    display: block;
+    position: fixed;
+    top: 2vh;
+    left: calc(50vw - calc($logo-width / 2));
+    z-index: 100;
+    width: $logo-width;
+  }
+}
+
+.scroll-container {
+  align-items: flex-start;
+}
+
 .container {
+  margin: 0 auto;
+  // padding: 0 $container-pad;
+  // border: 2px dashed green;
+  padding-top: calc($logo-width * 1.2);
   max-width: $container-hmax;
   max-height: $container-vmax;
-  margin: 0 auto;
-  padding: 0 $container-pad;
-  border: 2px solid green;
 }
 
 .section {
@@ -20,12 +44,12 @@
 
   // Inside a panel — pin content to bottom third
   &.panel {
-    padding: 20vh 5vw 5vh 5vw;
+    display: flex;
+    justify-content: center;
     align-items: flex-start;
-    justify-content: flex-start;
+    padding: 5vw;
 
     > .container {
-      padding-bottom: calc(#{$space-xl} + 5vh);
       position: relative;
       z-index: 2;
     }
@@ -43,56 +67,28 @@
   }
 }
 
-// About
-.about-content {
-  max-width: 720px;
-  font-size: $fs-md;
-  color: $color-text-muted;
-  line-height: $lh-snug;
-  font-weight: $fw-regular;
-}
-
-// Events
-.events {
-  background: $color-bg-alt;
-}
-
-.events-text {
-  max-width: 600px;
-  font-size: $fs-lg;
-  color: $color-text-muted;
-  margin-bottom: $space-md;
-}
-
 // CTA Button
 .btn {
   display: inline-block;
-  font-family: $font-heading;
-  font-size: $fs-sm;
-  font-weight: $fw-semi;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 1rem 2.5rem;
-  border: 1px solid transparent;
   transition: all $duration $ease-out;
   cursor: pointer;
+  border: 1px solid transparent;
+  padding: 0.25rem 2.5rem;
+  font-weight: $fw-semi;
+  font-size: $fs-sm;
+  font-family: $font-heading;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .btn-primary {
-  background: rgba($color-black, 0.5);
-  color: $color-accent-hover;
   border: 1px solid $color-accent;
+  background: rgba($color-black, 0.5);
+  color: $color-accent-lt;
 
   &:hover {
-    background: $color-accent-hover;
-    color: white;
     transform: translateY(-1px);
+    background: $color-accent-lt;
+    color: white;
   }
-}
-
-// Contact
-.contact-text {
-  max-width: 600px;
-  font-size: $fs-lg;
-  color: $color-text-muted;
 }

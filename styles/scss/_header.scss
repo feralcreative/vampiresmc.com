@@ -9,9 +9,9 @@
   width: 100%;
   z-index: 100;
   height: $header-height;
-  transition: background $duration $ease-out,
-              box-shadow $duration $ease-out;
-
+  transition:
+    background $duration $ease-out,
+    box-shadow $duration $ease-out;
 }
 
 .header-inner {
@@ -37,7 +37,7 @@ $pip-size-active: 10px;
   max-width: 600px;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 10%;
     right: 10%;
@@ -49,13 +49,13 @@ $pip-size-active: 10px;
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 10%;
     bottom: calc($pip-size / 2 - 0.5px);
     height: 1px;
     width: calc(var(--progress, 0) * 80%);
-    background: $color-accent-hover;
+    background: $color-accent-lt;
     z-index: 0;
     pointer-events: none;
     transition: width $duration $ease-out;
@@ -76,11 +76,11 @@ $pip-size-active: 10px;
   transition: color $duration $ease-out;
 
   &:hover {
-    color: $color-accent-hover;
+    color: $color-accent-lt;
   }
 
   &.active {
-    color: $color-accent-hover;
+    color: $color-accent-lt;
   }
 }
 
@@ -106,14 +106,15 @@ $pip-size-active: 10px;
   border-radius: 50%;
   background: $color-accent;
   flex-shrink: 0;
-  transition: background $duration $ease-out,
-              width $duration $ease-out,
-              height $duration $ease-out;
+  transition:
+    background $duration $ease-out,
+    width $duration $ease-out,
+    height $duration $ease-out;
 
   .scroll-dot.active & {
     width: $pip-size-active;
     height: $pip-size-active;
-    background: $color-accent-hover;
+    background: $color-accent-lt;
     margin-bottom: calc(($pip-size - $pip-size-active) / 2);
   }
 }

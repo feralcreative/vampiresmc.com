@@ -23,10 +23,16 @@
   height: 100vh;
   flex-shrink: 0;
   scroll-snap-align: start;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 // Full-bleed background image
@@ -45,7 +51,10 @@
 
   // Per-panel focus points — adjust horizontal % to reframe the subject
   .hero & img {
-    object-position: 70% 0%;
+    object-position: 60% 0%;
+    @include bp(md) {
+      object-position: 80% 0%;
+    }
   }
   .about & img {
     object-position: 50% center;

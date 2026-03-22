@@ -159,7 +159,7 @@ p + p {
   bottom: 2.5px;
   height: 1px;
   width: calc(var(--progress, 0) * 80%);
-  background: #f30000;
+  background: #ff0000;
   z-index: 0;
   pointer-events: none;
   -webkit-transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -190,10 +190,10 @@ p + p {
   transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .scroll-dot:hover {
-  color: #f30000;
+  color: #ff0000;
 }
 .scroll-dot.active {
-  color: #f30000;
+  color: #ff0000;
 }
 
 .scroll-dot-label {
@@ -225,7 +225,7 @@ p + p {
 .scroll-dot.active .scroll-dot-pip {
   width: 10px;
   height: 10px;
-  background: #f30000;
+  background: #ff0000;
   margin-bottom: -2px;
 }
 
@@ -252,7 +252,9 @@ p + p {
   -ms-flex-negative: 0;
       flex-shrink: 0;
   scroll-snap-align: start;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -262,6 +264,9 @@ p + p {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+.panel::-webkit-scrollbar {
+  display: none;
 }
 
 .panel-bg {
@@ -279,8 +284,14 @@ p + p {
   display: block;
 }
 .hero .panel-bg img {
-  -o-object-position: 70% 0%;
-     object-position: 70% 0%;
+  -o-object-position: 60% 0%;
+     object-position: 60% 0%;
+}
+@media (min-width: 768px) {
+  .hero .panel-bg img {
+    -o-object-position: 80% 0%;
+       object-position: 80% 0%;
+  }
 }
 .about .panel-bg img {
   -o-object-position: 50% center;
@@ -341,17 +352,41 @@ p + p {
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
-  color: #efefef;
+  color: #bebebe;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
+.header .social {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  gap: 10px;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+.header.logo {
+  display: block;
+  position: fixed;
+  top: 2vh;
+  left: calc(50vw - 62.5px);
+  z-index: 100;
+  width: 125px;
+}
+
+.scroll-container {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
 .container {
-  max-width: 1200px;
-  max-height: 100vh;
   margin: 0 auto;
-  padding: 0 2rem;
-  border: 2px solid green;
+  padding-top: 150px;
+  max-width: 1200px;
+  max-height: 80vh;
 }
 
 .section {
@@ -363,16 +398,18 @@ p + p {
   }
 }
 .section.panel {
-  padding: 20vh 5vw 5vh 5vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  padding: 5vw;
 }
 .section.panel > .container {
-  padding-bottom: calc(6rem + 5vh);
   position: relative;
   z-index: 2;
 }
@@ -381,10 +418,36 @@ p + p {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.6) 25%, rgba(0, 0, 0, 0.5) 100%, transparent 50%);
 }
 
+.btn {
+  display: inline-block;
+  -webkit-transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 0.25rem 2.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  border: 1px solid #c00;
+  background: rgba(0, 0, 0, 0.5);
+  color: #ff0000;
+}
+.btn-primary:hover {
+  -webkit-transform: translateY(-1px);
+          transform: translateY(-1px);
+  background: #ff0000;
+  color: white;
+}
+
 .about-content {
   max-width: 720px;
   font-size: 1rem;
-  color: #efefef;
+  color: #bebebe;
   line-height: 1.3;
   font-weight: 400;
 }
@@ -396,54 +459,127 @@ p + p {
 .events-text {
   max-width: 600px;
   font-size: 1.5rem;
-  color: #efefef;
+  color: #bebebe;
   margin-bottom: 2rem;
 }
 
-.btn {
-  display: inline-block;
+.event-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+@media (min-width: 768px) {
+  .event-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .event-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.event-card {
+  background: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(15px);
+}
+.event-card:hover {
+  border-color: #c00;
+}
+
+.event-card-img {
+  width: 100%;
+  overflow: hidden;
+}
+.event-card-img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.event-card:hover .event-card-img img {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.event-card-body {
+  padding: 1rem 1rem 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.event-card-title {
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.event-card-date {
+  color: #bebebe;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.event-card-location {
+  color: #bebebe;
+  margin: 0 0 1em 0;
+}
+
+.event-card-desc {
   font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 1rem 2.5rem;
-  border: 1px solid transparent;
-  -webkit-transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: pointer;
+  color: #bebebe;
+  line-height: 1.3;
+  margin-bottom: 0;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
-.btn-primary {
-  background: rgba(0, 0, 0, 0.5);
-  color: #f30000;
-  border: 1px solid #c00;
-}
-.btn-primary:hover {
-  background: #f30000;
-  color: white;
-  -webkit-transform: translateY(-1px);
-          transform: translateY(-1px);
+.event-card-body .btn {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
 }
 
-.contact-text {
-  max-width: 600px;
-  font-size: 1.5rem;
-  color: #efefef;
-}
-
-.review-hero {
+.fan-hero {
   max-width: 860px;
   margin: 0 auto;
   text-align: center;
   position: relative;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
-.review-quote {
+.fan-quote {
   position: relative;
-  margin: 0 0 4rem;
+  margin: 0;
 }
-.review-quote::before {
+.fan-quote::before {
   content: "“";
   display: block;
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -451,10 +587,10 @@ p + p {
   font-weight: 900;
   line-height: 0.75;
   color: #c00;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   opacity: 0.9;
 }
-.review-quote p {
+.fan-quote p {
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: clamp(2rem, 3vw, 3rem);
   font-weight: 300;
@@ -464,7 +600,7 @@ p + p {
   margin: 0;
 }
 
-.review-attribution {
+.fan-attribution {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -475,19 +611,157 @@ p + p {
   gap: 0.5rem;
 }
 
-.review-name {
+.fan-name {
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #c00;
+  color: #ff0000;
   text-shadow: 1px 1px 2px black;
 }
 
-.review-title {
+.fan-title {
   font-size: 1rem;
-  color: #efefef;
+  color: #bebebe;
+  letter-spacing: 0.04em;
+}
+
+.contact-text {
+  max-width: 600px;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+.contact-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 560px;
+}
+
+.contact-field {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.4rem;
+}
+.contact-field label {
+  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #bebebe;
+}
+.contact-field input,
+.contact-field textarea {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #fff;
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  -webkit-transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+.contact-field input::-webkit-input-placeholder, .contact-field textarea::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+.contact-field input::-moz-placeholder, .contact-field textarea::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+.contact-field input:-ms-input-placeholder, .contact-field textarea:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+.contact-field input::-ms-input-placeholder, .contact-field textarea::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+.contact-field input:focus,
+.contact-field textarea:focus {
+  outline: none;
+  border-color: #c00;
+}
+.contact-field textarea {
+  resize: vertical;
+}
+
+.fan-hero {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.fan-quote {
+  position: relative;
+  margin: 0;
+}
+.fan-quote::before {
+  content: "“";
+  display: block;
+  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(10rem, 18vw, 16rem);
+  font-weight: 900;
+  line-height: 0.75;
+  color: #c00;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+.fan-quote p {
+  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.3;
+  color: #fff;
+  margin: 0;
+}
+
+.fan-attribution {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fan-name {
+  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #ff0000;
+  text-shadow: 1px 1px 2px black;
+}
+
+.fan-title {
+  font-size: 1rem;
+  color: #bebebe;
   letter-spacing: 0.04em;
 }
 
@@ -577,10 +851,10 @@ p + p {
   transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bottom-dot:hover {
-  color: #f30000;
+  color: #ff0000;
 }
 .bottom-dot.active {
-  color: #f30000;
+  color: #ff0000;
 }
 
 .bottom-dot-pip {
@@ -599,7 +873,7 @@ p + p {
 .bottom-dot.active .bottom-dot-pip {
   width: 7px;
   height: 7px;
-  background: #f30000;
+  background: #ff0000;
   margin-top: calc(10px - 7px / 2);
 }
 
@@ -620,7 +894,7 @@ p + p {
   width: 100%;
   text-align: center;
   font-size: 0.75rem;
-  color: rgba(239, 239, 239, 0.5);
+  color: rgba(190, 190, 190, 0.5);
   letter-spacing: 0.04em;
   z-index: 199;
   pointer-events: none;

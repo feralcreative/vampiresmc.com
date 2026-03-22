@@ -29,7 +29,7 @@ $bn-pad: 10%; // mirrors top nav
   transition: width $duration $ease-out;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     right: 0;
     bottom: 100%;
@@ -37,7 +37,7 @@ $bn-pad: 10%; // mirrors top nav
     transform-origin: 16% 76%;
     width: 32px;
     height: 32px;
-    background-image: url('../../images/icons/icon-biker.svg');
+    background-image: url("../../images/icons/icon-biker.svg");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
@@ -55,7 +55,7 @@ $bn-pad: 10%; // mirrors top nav
 
   // Gray background track
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: $bn-pad;
     right: $bn-pad;
@@ -80,11 +80,11 @@ $bn-pad: 10%; // mirrors top nav
   transition: color $duration $ease-out;
 
   &:hover {
-    color: $color-accent-hover;
+    color: $color-accent-lt;
   }
 
   &.active {
-    color: $color-accent-hover;
+    color: $color-accent-lt;
   }
 }
 
@@ -98,15 +98,16 @@ $bn-pad: 10%; // mirrors top nav
   background: $color-accent;
   // Center pip vertically on the track line
   margin-top: calc(#{$bn-track-center} - #{$bn-pip} / 2);
-  transition: background $duration $ease-out,
-              width $duration $ease-out,
-              height $duration $ease-out,
-              margin-top $duration $ease-out;
+  transition:
+    background $duration $ease-out,
+    width $duration $ease-out,
+    height $duration $ease-out,
+    margin-top $duration $ease-out;
 
   .bottom-dot.active & {
     width: $bn-pip-active;
     height: $bn-pip-active;
-    background: $color-accent-hover;
+    background: $color-accent-lt;
     margin-top: calc(#{$bn-track-center} - #{$bn-pip-active} / 2);
   }
 }
@@ -119,5 +120,4 @@ $bn-pad: 10%; // mirrors top nav
   letter-spacing: 0.14em;
   line-height: 1;
   margin-top: 6px;
-
 }

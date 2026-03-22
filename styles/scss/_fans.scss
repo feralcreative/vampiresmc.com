@@ -1,0 +1,60 @@
+// ============================================
+// FANS
+// ============================================
+
+.fan-hero {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  height: fit-content;
+}
+
+.fan-quote {
+  position: relative;
+  margin: 0;
+
+  &::before {
+    content: "\201C";
+    display: block;
+    font-family: $font-heading;
+    font-size: clamp(10rem, 18vw, 16rem);
+    font-weight: $fw-black;
+    line-height: 0.75;
+    color: $color-accent;
+    margin-bottom: $space-xs;
+    opacity: 0.9;
+  }
+
+  p {
+    font-family: $font-heading;
+    font-size: clamp($fs-2xl, 3vw, $fs-3xl);
+    font-weight: $fw-light;
+    font-style: italic;
+    line-height: $lh-snug;
+    color: $color-text;
+    margin: 0;
+  }
+}
+
+.fan-attribution {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+}
+
+.fan-name {
+  font-family: $font-heading;
+  font-size: $fs-xl;
+  font-weight: $fw-semi;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: $color-accent-lt;
+  text-shadow: 1px 1px 2px black;
+}
+
+.fan-title {
+  font-size: $fs-md;
+  color: $color-text-muted;
+  letter-spacing: 0.04em;
+}

@@ -94,6 +94,19 @@
       const delta = Math.abs(e.deltaX) >= Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
       if (Math.abs(delta) < 5) return; // ignore micro-movements
 
+      // If the current panel is taller than the viewport and the scroll is
+      // primarily vertical, scroll it down/up before moving to the next panel.
+      const currentPanel = panels[targetIdx];
+      const panelOverflows = currentPanel.scrollHeight > currentPanel.clientHeight + 1;
+      if (panelOverflows && Math.abs(e.deltaY) >= Math.abs(e.deltaX)) {
+        const atBottom = currentPanel.scrollTop >= currentPanel.scrollHeight - currentPanel.clientHeight - 1;
+        const atTop = currentPanel.scrollTop <= 0;
+        if ((delta > 0 && !atBottom) || (delta < 0 && !atTop)) {
+          currentPanel.scrollBy({ top: delta, behavior: "smooth" });
+          return;
+        }
+      }
+
       wheelLocked = true;
       goToPanel(targetIdx + (delta > 0 ? 1 : -1));
       setTimeout(() => {

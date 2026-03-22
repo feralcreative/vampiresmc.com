@@ -1,0 +1,98 @@
+// ============================================
+// EVENTS
+// ============================================
+
+.events {
+  background: $color-bg-alt;
+}
+
+.events-text {
+  max-width: 600px;
+  font-size: $fs-lg;
+  color: $color-text-muted;
+  margin-bottom: $space-md;
+}
+
+.event-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-md;
+  margin-bottom: $space-md;
+
+  //@ Tablet — two columns
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  //@ Desktop — three columns
+  @media (min-width: $bp-lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.event-card {
+  background: rgba($color-black, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color $duration $ease-out;
+  backdrop-filter: blur(15px);
+
+  &:hover {
+    border-color: $color-accent;
+  }
+}
+
+.event-card-img {
+  width: 100%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $duration $ease-out;
+  }
+
+  .event-card:hover & img {
+    transform: scale(1.05);
+  }
+}
+
+.event-card-body {
+  padding: $space-sm $space-sm $space-md;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.event-card-title {
+  font-family: $font-heading;
+  font-size: $fs-2xl;
+  font-weight: $fw-light;
+  color: $color-text;
+  margin-bottom: $space-xs;
+}
+
+.event-card-date {
+  color: $color-text-muted;
+  font-size: $fs-md;
+  font-weight: $fw-xbold;
+}
+
+.event-card-location {
+  color: $color-text-muted;
+  margin: 0 0 1em 0;
+}
+
+.event-card-desc {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+  line-height: $lh-snug;
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.event-card-body .btn {
+  align-self: flex-start;
+}
