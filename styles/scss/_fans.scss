@@ -28,7 +28,7 @@
 
   p {
     font-family: $font-heading;
-    font-size: clamp($fs-3xl, 3vw, $fs-4xl);
+    font-size: clamp($fs-2xl, 3vw, $fs-3xl);
     font-weight: $fw-light;
     font-style: italic;
     line-height: $lh-snug;

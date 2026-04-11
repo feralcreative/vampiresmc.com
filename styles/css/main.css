@@ -509,7 +509,7 @@ p + p {
 }
 .fan-quote p {
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(2.5rem, 3vw, 3.5rem);
+  font-size: clamp(2rem, 3vw, 2.5rem);
   font-weight: 300;
   font-style: italic;
   line-height: 1.3;
