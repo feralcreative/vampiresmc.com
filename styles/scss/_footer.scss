@@ -1,6 +1,155 @@
 // ============================================
-// COPYRIGHT
+// FOOTER — bottom nav + copyright
 // ============================================
+// The "footer" on this site is everything pinned to the bottom of the
+// viewport: the panel-progress bottom nav (with the rider icon riding
+// the red fill line) and the copyright strip beneath it.
+
+// --------------------------------------------
+// BOTTOM NAV
+// --------------------------------------------
+
+$bn-height: 48px;
+$bn-track-center: 10px; // px from top of nav to center of track
+$bn-line-track: 2px; // thin gray background rail
+$bn-line-fill: 2.5px; // thicker red travelled line
+$bn-pip: 5px;
+$bn-pip-active: 7px;
+$bn-pad: 10%; // mirrors top nav
+
+.bottom-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  height: $bn-height;
+  z-index: 200;
+  pointer-events: none;
+}
+
+// Red fill line — grows left-to-right; carries the rider as ::after
+.bottom-nav-fill {
+  position: absolute;
+  left: $bn-pad;
+  top: calc(#{$bn-track-center} - #{$bn-line-fill} / 2);
+  height: $bn-line-fill;
+  width: calc(var(--progress, 0) * 80%);
+  background: $color-accent;
+  z-index: 1; // paint above the gray track so the travelled line reads clean
+  transition: width $duration $ease-out;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    transform: translateX(50%) rotate(var(--bike-rotation, 0deg));
+    transform-origin: 16% 76%;
+    width: 32px;
+    height: 32px;
+    background-image: url("../../images/icons/icon-biker.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    filter: invert(13%) sepia(96%) saturate(6270%) hue-rotate(0deg) brightness(88%) contrast(112%);
+    transition: transform $duration $ease-out;
+  }
+}
+
+// Dot buttons container — also draws the gray track via ::before
+.bottom-nav-dots {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  pointer-events: none;
+
+  // Gray background track
+  &::before {
+    content: "";
+    position: absolute;
+    left: $bn-pad;
+    right: $bn-pad;
+    top: calc(#{$bn-track-center} - #{$bn-line-track} / 2);
+    height: $bn-line-track;
+    background: rgba($color-accent, 0.35);
+    pointer-events: none;
+  }
+}
+
+.bottom-dot {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-accent;
+  pointer-events: auto;
+  transition: color $duration $ease-out;
+
+  &:hover {
+    color: $color-accent-lt;
+  }
+
+  &.active {
+    color: $color-accent-lt;
+  }
+}
+
+.bottom-dot-pip {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: $bn-pip;
+  height: $bn-pip;
+  border-radius: 50%;
+  background: $color-accent;
+  // Center pip vertically on the track line
+  margin-top: calc(#{$bn-track-center} - #{$bn-pip} / 2);
+  transition:
+    background $duration $ease-out,
+    width $duration $ease-out,
+    height $duration $ease-out,
+    margin-top $duration $ease-out;
+
+  .bottom-dot.active & {
+    width: $bn-pip-active;
+    height: $bn-pip-active;
+    background: $color-accent-lt;
+    margin-top: calc(#{$bn-track-center} - #{$bn-pip-active} / 2);
+  }
+}
+
+.bottom-dot-label {
+  font-family: $font-heading;
+  font-size: $fs-xs;
+  font-weight: $fw-semi;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  margin-top: 6px;
+  transition:
+    color $duration $ease-out,
+    font-size $duration $ease-out,
+    font-weight $duration $ease-out;
+
+  .bottom-dot:hover & {
+    color: white;
+    font-weight: 900;
+    font-size: $fs-sm;
+  }
+  .bottom-dot.active & {
+    color: red;
+    font-weight: 900;
+    font-size: $fs-sm;
+  }
+}
+
+// --------------------------------------------
+// COPYRIGHT
+// --------------------------------------------
 
 .site-copyright {
   position: fixed;
