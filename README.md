@@ -1,4 +1,6 @@
-# Vampires MC — Website
+# Vampires Motorcycle Club
+
+![vampiresmc.com screenshot](images/screenshot.jpg)
 
 [![Production](https://img.shields.io/badge/live-vampiresmc.com-cc0000?style=flat-square)](https://vampiresmc.com)
 [![Staging](https://img.shields.io/badge/staging-stage.vampiresmc.com-555?style=flat-square)](https://stage.vampiresmc.com)
