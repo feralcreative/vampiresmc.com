@@ -65,3 +65,6 @@ pnpm-lock.yaml
 .claude
 .playwright-mcp/
 _AI_AGENT_PRIMER.md
+.ssh
+docs
+.ht*
