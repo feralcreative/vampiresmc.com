@@ -9,8 +9,21 @@
 .events-text {
   max-width: 600px;
   font-size: $fs-lg;
-  color: $color-text-muted;
+  color: $color-text;
   margin-bottom: $space-md;
+}
+
+.events-empty {
+  max-width: 560px;
+  font-family: $font-body;
+  font-size: $fs-md;
+  font-style: italic;
+  color: $color-text-muted;
+  margin: 0 0 $space-md;
+
+  &[hidden] {
+    display: none;
+  }
 }
 
 .event-cards {
@@ -31,13 +44,15 @@
 }
 
 .event-card {
-  background: rgba($color-black, 0.2);
+  background: rgba($color-black, 0.7);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-height: 18rem;
   transition: border-color $duration $ease-out;
   backdrop-filter: blur(15px);
-
+  box-shadow: 0 10px 50px rgba($color-black, 0.6);
+  padding: 20px;
   &:hover {
     border-color: $color-accent;
   }
@@ -60,10 +75,17 @@
 }
 
 .event-card-body {
-  padding: $space-sm $space-sm $space-md;
+  padding: $space-sm $space-sm;
   display: flex;
   flex-direction: column;
+  gap: $space-xs;
   flex: 1;
+
+  // Zero out browser default paragraph margins so the flex `gap` is
+  // the single source of vertical rhythm between children.
+  > * {
+    margin: 0;
+  }
 }
 
 .event-card-title {
@@ -71,7 +93,7 @@
   font-size: $fs-2xl;
   font-weight: $fw-light;
   color: $color-text;
-  margin-bottom: $space-xs;
+  line-height: $lh-tight;
 }
 
 .event-card-date {
@@ -82,17 +104,21 @@
 
 .event-card-location {
   color: $color-text-muted;
-  margin: 0 0 1em 0;
 }
 
 .event-card-desc {
-  font-size: $fs-sm;
-  color: $color-text-muted;
+  font-size: $fs-md;
+  color: $color-text;
   line-height: $lh-snug;
-  margin-bottom: 0;
-  flex: 1;
+  margin-bottom: 1em;
 }
 
+// Anchor the "More Info" button to the bottom of the card regardless
+// of whether a description is present. `margin-top: auto` is the
+// flex spacer trick — consumes all remaining free space above the
+// button, so short cards and long cards both end with the button
+// flush to the bottom padding.
 .event-card-body .btn {
   align-self: flex-start;
+  margin-top: auto;
 }

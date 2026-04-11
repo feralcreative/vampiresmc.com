@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Staging"
+AuthUserFile /home/vampweb/stage.vampiresmc.com/.htpasswd
+Require valid-user

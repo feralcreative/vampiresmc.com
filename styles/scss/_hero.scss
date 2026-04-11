@@ -23,6 +23,7 @@
   height: 100vh;
   flex-shrink: 0;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: none;
@@ -42,11 +43,19 @@
   z-index: 0;
 
   img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     display: block;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+
+    &.active {
+      opacity: 1;
+    }
   }
 
   // Per-panel focus points — adjust horizontal % to reframe the subject
@@ -66,12 +75,21 @@
     object-position: 95% center;
   }
 
-  // Dark overlay
+  // Dark overlay — flat base darken, plus extra darkness at the top and
+  // bottom so the logo/social icons and the bottom nav stay legible.
   &::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0) 25%,
+        rgba(0, 0, 0, 0) 75%,
+        rgba(0, 0, 0, 0.7) 100%
+      ),
+      rgba(0, 0, 0, 0.45);
   }
 }
 

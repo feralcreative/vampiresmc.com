@@ -78,7 +78,7 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2rem, 4vw, 2.5rem);
 }
 
 h3 {
@@ -101,132 +101,6 @@ p + p {
   height: 2px;
   margin-top: 0.5rem;
   background: #c00;
-}
-
-.site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  height: 6rem;
-  -webkit-transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), -webkit-box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), -webkit-box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), -webkit-box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.header-inner {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  padding: 0 2rem;
-  height: 100%;
-}
-
-.scroll-dots {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  width: 100%;
-  max-width: 600px;
-}
-.scroll-dots::before {
-  content: "";
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  bottom: 2.5px;
-  height: 1px;
-  background: rgba(204, 0, 0, 0.35);
-  z-index: 0;
-  pointer-events: none;
-}
-.scroll-dots::after {
-  content: "";
-  position: absolute;
-  left: 10%;
-  bottom: 2.5px;
-  height: 1px;
-  width: calc(var(--progress, 0) * 80%);
-  background: #ff0000;
-  z-index: 0;
-  pointer-events: none;
-  -webkit-transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.scroll-dot {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  gap: 0.5rem;
-  padding: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #c00;
-  -webkit-transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.scroll-dot:hover {
-  color: #ff0000;
-}
-.scroll-dot.active {
-  color: #ff0000;
-}
-
-.scroll-dot-label {
-  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  line-height: 1;
-}
-@media (max-width: 480px) {
-  .scroll-dot-label {
-    display: none;
-  }
-}
-
-.scroll-dot-pip {
-  position: relative;
-  z-index: 1;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #c00;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
-  -webkit-transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.scroll-dot.active .scroll-dot-pip {
-  width: 10px;
-  height: 10px;
-  background: #ff0000;
-  margin-bottom: -2px;
 }
 
 .scroll-container {
@@ -252,6 +126,7 @@ p + p {
   -ms-flex-negative: 0;
       flex-shrink: 0;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: none;
@@ -275,6 +150,8 @@ p + p {
   z-index: 0;
 }
 .panel-bg img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
@@ -282,6 +159,12 @@ p + p {
   -o-object-position: center;
      object-position: center;
   display: block;
+  opacity: 0;
+  -webkit-transition: opacity 1.5s ease-in-out;
+  transition: opacity 1.5s ease-in-out;
+}
+.panel-bg img.active {
+  opacity: 1;
 }
 .hero .panel-bg img {
   -o-object-position: 60% 0%;
@@ -309,7 +192,8 @@ p + p {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.7)), color-stop(25%, rgba(0, 0, 0, 0)), color-stop(75%, rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.7))), rgba(0, 0, 0, 0.45);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.7) 100%), rgba(0, 0, 0, 0.45);
 }
 
 .panel > .container,
@@ -350,7 +234,7 @@ p + p {
 
 .hero-subtitle {
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 400;
   color: #bebebe;
   letter-spacing: 0.15em;
@@ -362,10 +246,23 @@ p + p {
   display: -ms-flexbox;
   display: flex;
   position: fixed;
-  gap: 10px;
+  gap: 20px;
   top: 20px;
   right: 20px;
   z-index: 100;
+}
+.header .social i {
+  color: red;
+  font-size: 1.2em;
+  -webkit-transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.header .social i:hover {
+  color: white;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
 }
 .header.logo {
   display: block;
@@ -380,13 +277,20 @@ p + p {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .container {
   margin: 0 auto;
   padding-top: 150px;
   max-width: 1200px;
-  max-height: 80vh;
+}
+@media (max-width: 768px) {
+  .container {
+    padding-bottom: 25vh;
+  }
 }
 
 .section {
@@ -413,15 +317,11 @@ p + p {
   position: relative;
   z-index: 2;
 }
-.section.panel .panel-bg::after {
-  background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.88)), color-stop(25%, rgba(0, 0, 0, 0.6)), color-stop(100%, rgba(0, 0, 0, 0.5)), color-stop(50%, transparent));
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.6) 25%, rgba(0, 0, 0, 0.5) 100%, transparent 50%);
-}
 
 .btn {
   display: inline-block;
-  -webkit-transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   border: 1px solid transparent;
   padding: 0.25rem 2.5rem;
@@ -446,7 +346,7 @@ p + p {
 
 .about-content {
   max-width: 720px;
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: #bebebe;
   line-height: 1.3;
   font-weight: 400;
@@ -458,9 +358,21 @@ p + p {
 
 .events-text {
   max-width: 600px;
-  font-size: 1.5rem;
-  color: #bebebe;
+  font-size: 1.25rem;
+  color: #fff;
   margin-bottom: 2rem;
+}
+
+.events-empty {
+  max-width: 560px;
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: #bebebe;
+  margin: 0 0 2rem;
+}
+.events-empty[hidden] {
+  display: none;
 }
 
 .event-cards {
@@ -481,7 +393,7 @@ p + p {
 }
 
 .event-card {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.7);
   overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -490,9 +402,13 @@ p + p {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 18rem;
+  -webkit-transition: border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   backdrop-filter: blur(15px);
+  -webkit-box-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
+  padding: 20px;
 }
 .event-card:hover {
   border-color: #c00;
@@ -507,10 +423,10 @@ p + p {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-transition: -webkit-transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: -webkit-transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), -webkit-transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .event-card:hover .event-card-img img {
   -webkit-transform: scale(1.05);
@@ -518,7 +434,7 @@ p + p {
 }
 
 .event-card-body {
-  padding: 1rem 1rem 2rem;
+  padding: 1rem 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -526,9 +442,13 @@ p + p {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  gap: 0.5rem;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+}
+.event-card-body > * {
+  margin: 0;
 }
 
 .event-card-title {
@@ -536,7 +456,7 @@ p + p {
   font-size: 2rem;
   font-weight: 300;
   color: #fff;
-  margin-bottom: 0.5rem;
+  line-height: 1.1;
 }
 
 .event-card-date {
@@ -547,22 +467,19 @@ p + p {
 
 .event-card-location {
   color: #bebebe;
-  margin: 0 0 1em 0;
 }
 
 .event-card-desc {
-  font-size: 0.875rem;
-  color: #bebebe;
+  font-size: 1rem;
+  color: #fff;
   line-height: 1.3;
-  margin-bottom: 0;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  margin-bottom: 1em;
 }
 
 .event-card-body .btn {
   -ms-flex-item-align: start;
       align-self: flex-start;
+  margin-top: auto;
 }
 
 .fan-hero {
@@ -592,7 +509,7 @@ p + p {
 }
 .fan-quote p {
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-size: clamp(2.5rem, 3vw, 3.5rem);
   font-weight: 300;
   font-style: italic;
   line-height: 1.3;
@@ -612,6 +529,7 @@ p + p {
 }
 
 .fan-name {
+  padding-top: 1em;
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
@@ -629,12 +547,12 @@ p + p {
 
 .contact-text {
   max-width: 600px;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: #fff;
   margin-bottom: 2rem;
 }
 
-.contact-form {
+.discord-card {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -644,101 +562,31 @@ p + p {
           flex-direction: column;
   gap: 1rem;
   width: 100%;
-  max-width: 560px;
+  max-width: 640px;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  backdrop-filter: blur(6px);
+}
+@media (min-width: 768px) {
+  .discord-card {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
+    gap: 2rem;
+    padding: 2rem 2rem 2rem 2rem;
+  }
 }
 
-.contact-field {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  gap: 0.4rem;
-}
-.contact-field label {
-  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #bebebe;
-}
-.contact-field input,
-.contact-field textarea {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
-  color: #fff;
-  font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
-  padding: 0.75rem 1rem;
-  -webkit-transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  width: 100%;
-}
-.contact-field input::-webkit-input-placeholder, .contact-field textarea::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-.contact-field input::-moz-placeholder, .contact-field textarea::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-.contact-field input:-ms-input-placeholder, .contact-field textarea:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-.contact-field input::-ms-input-placeholder, .contact-field textarea::-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-.contact-field input::placeholder,
-.contact-field textarea::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-.contact-field input:focus,
-.contact-field textarea:focus {
-  outline: none;
-  border-color: #c00;
-}
-.contact-field textarea {
-  resize: vertical;
-}
-
-.fan-hero {
-  max-width: 860px;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
-.fan-quote {
-  position: relative;
-  margin: 0;
-}
-.fan-quote::before {
-  content: "“";
-  display: block;
-  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(10rem, 18vw, 16rem);
-  font-weight: 900;
-  line-height: 0.75;
-  color: #c00;
-  margin-bottom: 0.5rem;
-  opacity: 0.9;
-}
-.fan-quote p {
-  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(2rem, 3vw, 3rem);
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.3;
-  color: #fff;
-  margin: 0;
-}
-
-.fan-attribution {
+.discord-card__body {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -749,20 +597,178 @@ p + p {
   gap: 0.5rem;
 }
 
-.fan-name {
+.discord-card__status {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 0.5rem;
   font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1.5rem;
+  font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #ff0000;
-  text-shadow: 1px 1px 2px black;
+  color: #bebebe;
 }
 
-.fan-title {
-  font-size: 1rem;
+.discord-card__status-dot {
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: #3ba55c;
+  -webkit-box-shadow: 0 0 0 0 rgba(59, 165, 92, 0.6);
+          box-shadow: 0 0 0 0 rgba(59, 165, 92, 0.6);
+  -webkit-animation: discord-pulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+          animation: discord-pulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@-webkit-keyframes discord-pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(59, 165, 92, 0.55);
+            box-shadow: 0 0 0 0 rgba(59, 165, 92, 0.55);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 10px rgba(59, 165, 92, 0);
+            box-shadow: 0 0 0 10px rgba(59, 165, 92, 0);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba(59, 165, 92, 0);
+            box-shadow: 0 0 0 0 rgba(59, 165, 92, 0);
+  }
+}
+
+@keyframes discord-pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(59, 165, 92, 0.55);
+            box-shadow: 0 0 0 0 rgba(59, 165, 92, 0.55);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 10px rgba(59, 165, 92, 0);
+            box-shadow: 0 0 0 10px rgba(59, 165, 92, 0);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba(59, 165, 92, 0);
+            box-shadow: 0 0 0 0 rgba(59, 165, 92, 0);
+  }
+}
+.discord-card__count-wrap {
+  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: #bebebe;
-  letter-spacing: 0.04em;
+}
+.discord-card__count-wrap[hidden] {
+  display: none;
+}
+
+.discord-card__count {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-right: 0.3rem;
+}
+
+.discord-card__title {
+  font-family: "Montserrat", "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.1;
+}
+@media (min-width: 768px) {
+  .discord-card__title {
+    font-size: 2.5rem;
+  }
+}
+
+.discord-card__copy {
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #bebebe;
+  margin: 0;
+  max-width: 42ch;
+}
+
+.discord-card__actions {
+  margin-top: 0.5rem;
+}
+
+.btn-discord {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 0.6rem;
+  border: 1px solid #c00;
+  background: rgba(0, 0, 0, 0.5);
+  color: #ff0000;
+  padding: 0.75rem 2rem;
+  text-decoration: none;
+}
+.btn-discord .fa-discord {
+  font-size: 1.2em;
+}
+.btn-discord:hover, .btn-discord:focus-visible {
+  -webkit-transform: translateY(-1px);
+          transform: translateY(-1px);
+  background: #ff0000;
+  color: #fff;
+  outline: none;
+}
+
+.discord-card__qr {
+  display: none;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  -ms-flex-item-align: center;
+      align-self: center;
+  padding: 0.75rem;
+  background: #fff;
+  border-radius: 4px;
+}
+@media (min-width: 768px) {
+  .discord-card__qr {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    width: 140px;
+    height: 140px;
+  }
+}
+.discord-card__qr svg,
+.discord-card__qr img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.discord-card__qr-caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .bottom-nav {
@@ -778,12 +784,13 @@ p + p {
 .bottom-nav-fill {
   position: absolute;
   left: 10%;
-  top: calc(10px - 0.5px);
-  height: 1px;
+  top: calc(10px - 2.5px / 2);
+  height: 2.5px;
   width: calc(var(--progress, 0) * 80%);
   background: #c00;
-  -webkit-transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+  -webkit-transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bottom-nav-fill::after {
   content: "";
@@ -802,10 +809,10 @@ p + p {
   background-position: center bottom;
   -webkit-filter: invert(13%) sepia(96%) saturate(6270%) hue-rotate(0deg) brightness(88%) contrast(112%);
           filter: invert(13%) sepia(96%) saturate(6270%) hue-rotate(0deg) brightness(88%) contrast(112%);
-  -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), -webkit-transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-transition: -webkit-transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: -webkit-transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), -webkit-transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bottom-nav-dots {
@@ -821,8 +828,8 @@ p + p {
   position: absolute;
   left: 10%;
   right: 10%;
-  top: calc(10px - 0.5px);
-  height: 1px;
+  top: calc(10px - 2px / 2);
+  height: 2px;
   background: rgba(204, 0, 0, 0.35);
   pointer-events: none;
 }
@@ -847,8 +854,8 @@ p + p {
   cursor: pointer;
   color: #c00;
   pointer-events: auto;
-  -webkit-transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bottom-dot:hover {
   color: #ff0000;
@@ -867,8 +874,8 @@ p + p {
   border-radius: 50%;
   background: #c00;
   margin-top: calc(10px - 5px / 2);
-  -webkit-transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1), width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1), width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bottom-dot.active .bottom-dot-pip {
   width: 7px;
@@ -885,6 +892,18 @@ p + p {
   letter-spacing: 0.14em;
   line-height: 1;
   margin-top: 6px;
+  -webkit-transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1), font-size 0.6s cubic-bezier(0.16, 1, 0.3, 1), font-weight 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1), font-size 0.6s cubic-bezier(0.16, 1, 0.3, 1), font-weight 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bottom-dot:hover .bottom-dot-label {
+  color: white;
+  font-weight: 900;
+  font-size: 0.875rem;
+}
+.bottom-dot.active .bottom-dot-label {
+  color: red;
+  font-weight: 900;
+  font-size: 0.875rem;
 }
 
 .site-copyright {
@@ -894,7 +913,7 @@ p + p {
   width: 100%;
   text-align: center;
   font-size: 0.75rem;
-  color: rgba(190, 190, 190, 0.5);
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.04em;
   z-index: 199;
   pointer-events: none;

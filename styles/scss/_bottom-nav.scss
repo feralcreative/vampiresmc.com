@@ -4,6 +4,8 @@
 
 $bn-height: 48px;
 $bn-track-center: 10px; // px from top of nav to center of track
+$bn-line-track: 2px; // thin gray background rail
+$bn-line-fill: 2.5px; // thicker red travelled line
 $bn-pip: 5px;
 $bn-pip-active: 7px;
 $bn-pad: 10%; // mirrors top nav
@@ -22,10 +24,11 @@ $bn-pad: 10%; // mirrors top nav
 .bottom-nav-fill {
   position: absolute;
   left: $bn-pad;
-  top: calc(#{$bn-track-center} - 0.5px); // center a 1px line
-  height: 1px;
+  top: calc(#{$bn-track-center} - #{$bn-line-fill} / 2);
+  height: $bn-line-fill;
   width: calc(var(--progress, 0) * 80%);
   background: $color-accent;
+  z-index: 1; // paint above the gray track so the travelled line reads clean
   transition: width $duration $ease-out;
 
   &::after {
@@ -59,8 +62,8 @@ $bn-pad: 10%; // mirrors top nav
     position: absolute;
     left: $bn-pad;
     right: $bn-pad;
-    top: calc(#{$bn-track-center} - 0.5px); // center a 1px line
-    height: 1px;
+    top: calc(#{$bn-track-center} - #{$bn-line-track} / 2);
+    height: $bn-line-track;
     background: rgba($color-accent, 0.35);
     pointer-events: none;
   }
@@ -120,4 +123,19 @@ $bn-pad: 10%; // mirrors top nav
   letter-spacing: 0.14em;
   line-height: 1;
   margin-top: 6px;
+  transition:
+    color $duration $ease-out,
+    font-size $duration $ease-out,
+    font-weight $duration $ease-out;
+
+  .bottom-dot:hover & {
+    color: white;
+    font-weight: 900;
+    font-size: $fs-sm;
+  }
+  .bottom-dot.active & {
+    color: red;
+    font-weight: 900;
+    font-size: $fs-sm;
+  }
 }
