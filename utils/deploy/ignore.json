@@ -1,0 +1,27 @@
+{
+  "description": "Rsync exclude patterns used by utils/deploy/deploy.sh. Mirrors the 'ignore' list in .vscode/sftp.json — keep the two in sync when adding or removing patterns. Patterns without a leading slash match the basename at any depth; trailing slash restricts the match to directories.",
+  "patterns": [
+    "_*",
+    ".DS_Store",
+    ".env",
+    ".env.example",
+    ".git",
+    ".git*",
+    ".claude",
+    ".playwright-mcp",
+    ".github",
+    ".vscode",
+    "*.clasp*",
+    "authorized_keys",
+    "appsscript.json",
+    "libs/",
+    "gs/",
+    "docs/",
+    "scss/",
+    "*.md",
+    "*.css.map",
+    "bs-config.js",
+    "utils/",
+    ".ht*"
+  ]
+}

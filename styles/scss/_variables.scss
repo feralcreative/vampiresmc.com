@@ -8,13 +8,13 @@ $logo-width: 125px;
 $color-bg: #0b0b0b;
 $color-bg-alt: #141414;
 $color-surface: #1a1a1a;
-$color-text: #fff;
+$color-text: #ffffff;
 $color-text-muted: #bebebe;
-$color-accent: #c00; // warm amber
-$color-accent-lt: #ff0000; // $color-accent lightened 10%
+$color-accent: #cc0000;
+$color-accent-lt: #ff0000;
 $color-white: #fff;
 $color-black: #000;
-$color-tx: rgba(0, 0, 0, 0);
+$color-tx: transparent;
 
 // Typography
 $font-body:
@@ -33,7 +33,7 @@ $fs-xl: 1.5rem; // 24px
 $fs-2xl: 2rem; // 32px
 $fs-3xl: 2.5rem; // 48px
 $fs-4xl: 3.5rem; // 72px
-$fs-hero: clamp(5rem, 8vw, 7rem);
+$fs-hero: clamp(4rem, 7vw, 6rem);
 
 $fw-xthin: 100;
 $fw-thin: 200;
@@ -63,28 +63,53 @@ $container-pad: 2rem;
 $container-hmax: 1200px;
 $container-vmax: 80vh;
 
-// Breakpoints
-$bp-sm: 480px;
+// Breakpoints (Bootstrap 5 values)
+$bp-sm: 576px;
 $bp-md: 768px;
-$bp-lg: 1024px;
-$bp-xl: 1280px;
+$bp-lg: 992px;
+$bp-xl: 1200px;
+$bp-xxl: 1400px;
 
-@mixin bp($breakpoint) {
-  @if $breakpoint == sm {
-    @media (min-width: $bp-sm) {
-      @content;
+// Breakpoint mixin — supports `up` (default), `down`, and `only`.
+// See README.md for usage examples.
+@mixin bp($breakpoint, $direction: up) {
+  @if $direction == up {
+    @if $breakpoint == sm {
+      @media (min-width: $bp-sm) { @content; }
+    } @else if $breakpoint == md {
+      @media (min-width: $bp-md) { @content; }
+    } @else if $breakpoint == lg {
+      @media (min-width: $bp-lg) { @content; }
+    } @else if $breakpoint == xl {
+      @media (min-width: $bp-xl) { @content; }
+    } @else if $breakpoint == xxl {
+      @media (min-width: $bp-xxl) { @content; }
     }
-  } @else if $breakpoint == md {
-    @media (min-width: $bp-md) {
-      @content;
+  } @else if $direction == down {
+    @if $breakpoint == sm {
+      @media (max-width: #{$bp-sm - 1px}) { @content; }
+    } @else if $breakpoint == md {
+      @media (max-width: #{$bp-md - 1px}) { @content; }
+    } @else if $breakpoint == lg {
+      @media (max-width: #{$bp-lg - 1px}) { @content; }
+    } @else if $breakpoint == xl {
+      @media (max-width: #{$bp-xl - 1px}) { @content; }
+    } @else if $breakpoint == xxl {
+      @media (max-width: #{$bp-xxl - 1px}) { @content; }
     }
-  } @else if $breakpoint == lg {
-    @media (min-width: $bp-lg) {
-      @content;
-    }
-  } @else if $breakpoint == xl {
-    @media (min-width: $bp-xl) {
-      @content;
+  } @else if $direction == only {
+    @if $breakpoint == xs {
+      @media (max-width: #{$bp-sm - 1px}) { @content; }
+    } @else if $breakpoint == sm {
+      @media (min-width: $bp-sm) and (max-width: #{$bp-md - 1px}) { @content; }
+    } @else if $breakpoint == md {
+      @media (min-width: $bp-md) and (max-width: #{$bp-lg - 1px}) { @content; }
+    } @else if $breakpoint == lg {
+      @media (min-width: $bp-lg) and (max-width: #{$bp-xl - 1px}) { @content; }
+    } @else if $breakpoint == xl {
+      @media (min-width: $bp-xl) and (max-width: #{$bp-xxl - 1px}) { @content; }
+    } @else if $breakpoint == xxl {
+      @media (min-width: $bp-xxl) { @content; }
     }
   }
 }

@@ -6,21 +6,47 @@
   <title>Vampires Motorcycle Club — Est. 1954</title>
   <meta name="description" content="Vampires Motorcycle Club — a diverse, ride-focused club with chapters in Santa Cruz, San Francisco, and San Luis Obispo, California.">
 
+  <!-- Favicon -->
+
+  <link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png?v=2026.04.11.0939" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg?v=2026.04.11.0939" />
+  <link rel="shortcut icon" href="/images/favicon/favicon.ico?v=2026.04.11.0939" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png?v=2026.04.11.0939" />
+  <meta name="apple-mobile-web-app-title" content="VMC" />
+  <link rel="manifest" href="/images/favicon/site.webmanifest?v=2026.04.11.0939" />
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   <!-- Styles -->
+  <link rel="stylesheet" href="https://feralcreative.dev/utils.min.css">
   <link rel="stylesheet" href="styles/css/main.min.css?v=2026.04.10.1957">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
+  <section id="viewport-widget" class="viewport-widget top container-fluid">
+    <div class="row">
+      <div class="col-12 text-center">
+        <p class="viewport-size">Viewport:
+        </p>
+      </div>
+    </div>
+  </section>
+  <script>
+    // Dev-only viewport widget — removed on any non-local host (prod).
+    if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+      document.getElementById('viewport-widget')?.remove();
+    }
+  </script>
   <a href="/">
     <div class="header logo"><img src="./images/logos/top-rocker.svg" alt="Vampires MC Logo">
   </a>
   <div class="social">
     <a href="https://www.facebook.com/vampiresmc" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+    <a href="https://www.instagram.com/vampires_mc/" target="_blank" rel="noopener noreferrer" aria-label="Follow Vampires MC on Instagram"><i class="fa-brands fa-instagram"></i></a>
+
     <a href="https://discord.gg/5wqFRxqzxN" target="_blank" rel="noopener noreferrer" aria-label="Join Vampires MC on Discord"><i class="fa-brands fa-discord"></i></a>
   </div>
   </div>
@@ -108,7 +134,7 @@
 
         <p class="events-empty" data-events-empty hidden>No rallies on the calendar right now. Follow us on Facebook or hop into Discord for the latest ride chatter.</p>
 
-        <a href="https://www.facebook.com/vampiresmc/events" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View All Events on Facebook</a>
+        <a href="https://www.facebook.com/vampiresmc/events" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View All Events on&nbsp;Facebook</a>
       </div>
     </section>
 

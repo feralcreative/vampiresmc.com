@@ -52,7 +52,10 @@
   transition: border-color $duration $ease-out;
   backdrop-filter: blur(15px);
   box-shadow: 0 10px 50px rgba($color-black, 0.6);
-  padding: 20px;
+  padding: 1.5em;
+  @include bp(sm, down) {
+    padding: 0.5em;
+  }
   &:hover {
     border-color: $color-accent;
   }
@@ -121,4 +124,17 @@
 .event-card-body .btn {
   align-self: flex-start;
   margin-top: auto;
+  @include bp(sm, down) {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+// "View All Events on Facebook" button below the card grid.
+.events > .container > .btn {
+  @include bp(sm, down) {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
 }

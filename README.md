@@ -59,14 +59,29 @@ SCSS is compiled by the [Live Sass Compiler](https://marketplace.visualstudio.co
 
 To run the site locally, open `index.html` through any static server (VS Code Live Server works). There's no Node tooling or package manager.
 
+A small `#viewport-widget` at the top of the page shows the current viewport size during development. It's part of the markup in `index.html` and is removed from the DOM at runtime on any non-local host (anything that isn't `localhost` or `127.0.0.1`), so it never ships to production. To broaden the dev-host match for LAN testing, edit the regex in the inline script right after the widget element.
+
 ## Deployment
 
-Files are deployed via SFTP. Credentials live in `.vscode/sftp.json` (gitignored). Two profiles are configured:
+> **Before your first deploy:** `.vscode/sftp.json` is git-ignored because it carries server credentials (host, username, remote paths, SSH agent config). The deploy scripts read connection details from it at runtime, so it must exist locally before anything will work. If you don't already have one, ask Ziad at <ziad@feralcreative.co> or <ziad@vampiresmc.com> for a copy and drop it in `.vscode/`.
 
-- **stage** → `stage.vampiresmc.com`
-- **prod** → `vampiresmc.com`
+Deploys run from the scripts in `utils/deploy/`. Both targets use `rsync -avz --delete` over SSH, authenticating through `$SSH_AUTH_SOCK` (same agent the VS Code SFTP extension uses). Connection details (host, username, port, remote paths) are read at runtime from `.vscode/sftp.json`, so credentials live in exactly one place.
 
-Both point at the same DreamHost shared host; the remote paths differ.
+```bash
+./utils/deploy/stage.sh              # push to stage.vampiresmc.com
+./utils/deploy/prod.sh               # push to vampiresmc.com
+./utils/deploy/stage.sh --dry-run    # preview without uploading
+./utils/deploy/prod.sh  --dry-run    # preview prod without uploading
+./utils/deploy/prod.sh  --force      # bypass prod git-clean / on-main gates
+```
+
+Each run compiles SCSS via `npx sass`, rewrites the `.css?v=<...>` cache-bust string in `index.html` to the current timestamp, rsyncs the tree, and prints a summary box (target, git sha, cache-bust version, files moved, bytes, timings). The cache-bust rewrite is auto-reverted locally after rsync — the new version string only exists on disk long enough to be uploaded, so your working tree stays clean. The exclude list lives in `utils/deploy/ignore.json` and mirrors the `ignore` array in `.vscode/sftp.json` — keep both in sync when adding or removing patterns.
+
+**Prod safety gates:** `prod.sh` refuses to run when the working tree is dirty or when you're not on `main`, and it requires you to type `yes` at the confirmation prompt. `--force` bypasses the git checks but not the confirmation.
+
+**Dependencies:** `rsync`, `ssh`, `jq`, `git`, and `npx` (Node). Install the non-default ones with `brew install jq rsync`.
+
+The VS Code SFTP extension remains configured via `.vscode/sftp.json` as a fallback for single-file pushes or emergency manual deploys.
 
 ## Sections
 
