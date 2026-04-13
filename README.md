@@ -42,7 +42,11 @@ images/
   logos/
 ```
 
-## Development
+## Assets
+
+All graphics, logos, icons, and hero imagery live in [this Figma doc](https://www.figma.com/design/sGYKJYBjowvcPekhdk5STL/vampiresmc.com?node-id=0-1&t=AwxkK6qHpqbLZkJa-1). It's the source of truth — pull exports from there rather than regenerating. To access the file, contact [Ziad](mailto:ziad@feralcreative.co) for an invite.
+
+## Local Development
 
 SCSS compiles via the [Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=glenn2223.live-sass) VS Code extension on save. `index.html` loads the minified build. Serve locally with any static server.
 
@@ -51,6 +55,8 @@ SCSS compiles via the [Live Sass Compiler](https://marketplace.visualstudio.com/
 ## Deployment
 
 > **First deploy:** get `.vscode/sftp.json` from [Ziad](mailto:ziad@feralcreative.co) — it's git-ignored because it holds credentials, and the deploy scripts read connection details from it.
+
+> **Staging auth:** `stage.vampiresmc.com` is behind HTTP basic auth — `user` / `pass`. Not a real secret, just there to keep bots and crawlers out.
 
 ```bash
 ./utils/deploy/stage.sh           # → stage.vampiresmc.com

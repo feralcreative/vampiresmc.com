@@ -3,15 +3,22 @@
     "title": "31st Annual Rally",
     "startDate": "2026-06-12",
     "endDate": "2026-06-14",
-    "location": "Santa Cruz",
-    "description": "Free camping Fri/Sat nights. Saturday led ride through the Santa Cruz Mountains, BBQ back at the campsite to follow. Then, stupid human games. Guaranteed no injuries or your money back.",
+    "startTime": "17:00",
+    "endTime": "09:00",
+    "locationName": "",
+    "location": "",
+    "description": "Free camping Fri/Sat nights. Saturday led ride through the Santa Cruz Mountains, followed by a BBQ back at the campsite. Then, stupid human games. Guaranteed no injuries or your money back.",
     "url": "https://www.facebook.com/events/1657681452077265"
   },
   {
     "title": "The Dark Ride",
     "startDate": "2026-09-26",
     "endDate": "2026-09-26",
-    "location": "Santa Cruz",
+    "startTime": "19:00",
+    "ksuTime": "19:30",
+    "endTime": "23:00",
+    "locationName": "",
+    "location": "",
     "description": "Our annual evening roll through the Santa Cruz mountains—favorite roads, fewer cars, more critters. Meet at 19:00, KSU 19:30 or whenever, pizza at Woodstock’s after.",
     "url": "https://www.facebook.com/events/719932437830334"
   }

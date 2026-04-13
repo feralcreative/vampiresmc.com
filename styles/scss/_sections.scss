@@ -12,7 +12,7 @@
     z-index: 100;
     @include bp(sm, down) {
       flex-direction: column;
-      gap: 0.5em;
+      gap: 0.25em;
       justify-content: center;
       align-items: center;
     }
@@ -46,10 +46,9 @@
 
 .container {
   margin: 0 auto;
-  // padding: 0 $container-pad;
-  padding-top: calc($logo-width * 1.2);
+  padding: calc($logo-width * 1.2) 5vw 25vh;
   max-width: $container-hmax;
-  // max-height: $container-vmax;
+
   @media (max-width: $bp-md) {
     padding-bottom: 25vh;
   }
@@ -63,12 +62,10 @@
     padding: $space-2xl 0;
   }
 
-  // Inside a panel — pin content to bottom third
+  // Inside a panel — no padding so .panel-bg can go full-bleed. Horizontal
+  // breathing room lives on .container / .hero-content instead.
   &.panel {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 5vw;
+    padding: 0;
 
     > .container {
       position: relative;
@@ -132,20 +129,33 @@
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  // Grid with a single overlapping cell: .panel-bg (sticky) stacks beneath
+  // the content, and both occupy the same grid area so they overlap.
+  display: grid;
+  grid-template-areas: "stack";
+
+  > .panel-bg,
+  > .container,
+  > .hero-content {
+    grid-area: stack;
+  }
 
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
-// Full-bleed background image
+// Full-bleed background image — sticky so it covers the full scroll range
+// of the panel (including panels whose content overflows 100vh).
 .panel-bg {
-  position: absolute;
-  inset: 0;
+  position: sticky;
+  top: 0;
   z-index: 0;
+  flex-shrink: 0;
+  width: 100%;
+  height: 100vh;
+  margin-bottom: -100vh; // take out of flex flow so .container stacks on top
 
   img {
     position: absolute;
@@ -189,12 +199,12 @@
     background:
       linear-gradient(
         to bottom,
-        rgba($color-black, 0.9) 0%,
+        rgba($color-black, 0.7) 0%,
         rgba($color-black, 0) 25%,
         rgba($color-black, 0) 75%,
-        rgba($color-black, 0.9) 100%
+        rgba($color-black, 0.7) 100%
       ),
-      rgba($color-black, 0.5);
+      rgba($color-black, 0.3);
   }
 }
 
@@ -222,6 +232,10 @@
 }
 
 .hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   z-index: 2;
 }

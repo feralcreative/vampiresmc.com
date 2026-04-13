@@ -253,12 +253,16 @@
   //
   // Event schema (events.json is an array of these):
   //   {
-  //     "title":       "32nd Annual Rally",
-  //     "startDate":   "2026-06-12",         // ISO YYYY-MM-DD (local)
-  //     "endDate":     "2026-06-14",         // optional; defaults to startDate
-  //     "location":    "Santa Cruz",
-  //     "description": "…",                  // optional, 1–2 sentences
-  //     "url":         "https://…"            // optional; "More Info" link
+  //     "title":        "32nd Annual Rally",
+  //     "startDate":    "2026-06-12",          // ISO YYYY-MM-DD (local)
+  //     "endDate":      "2026-06-14",          // optional; defaults to startDate
+  //     "startTime":    "17:00",               // 24h HH:MM, local (America/Los_Angeles)
+  //     "ksuTime":      "19:30",               // optional; display-only "kick stands up"
+  //     "endTime":      "12:00",               // 24h HH:MM, local
+  //     "locationName": "Harvey West Park",    // optional; venue/meeting point name
+  //     "location":     "123 Main St, …",      // street address of meeting point
+  //     "description":  "…",                   // optional, 1–2 sentences
+  //     "url":          "https://…"            // optional; "More Info" link
   //   }
   const EVENTS_LIMIT = 6;
   const MONTHS_SHORT = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -287,6 +291,113 @@
     return `${MONTHS_SHORT[start.getMonth()]} ${start.getDate()}, ${start.getFullYear()} – ${MONTHS_SHORT[end.getMonth()]} ${end.getDate()}, ${end.getFullYear()}`;
   }
 
+  // "19:00" -> "7:00 PM". Returns "" for invalid input.
+  function formatTime12(hhmm) {
+    if (!hhmm || typeof hhmm !== "string") return "";
+    const [h, m] = hhmm.split(":").map(Number);
+    if (Number.isNaN(h) || Number.isNaN(m)) return "";
+    const period = h >= 12 ? "PM" : "AM";
+    const hour12 = ((h + 11) % 12) + 1;
+    return `${hour12}:${String(m).padStart(2, "0")} ${period}`;
+  }
+
+  // ("2026-06-12", "17:00") -> "20260612T170000". Naked datetime (no Z),
+  // consumed with an explicit TZID (ICS) or ctz parameter (Google).
+  function toCalDateTime(dateIso, timeHhmm) {
+    const date = (dateIso || "").replace(/-/g, "");
+    const time = (timeHhmm || "00:00").replace(":", "") + "00";
+    return `${date}T${time}`;
+  }
+
+  // RFC 5545 text escaping for ICS field values.
+  function escapeIcs(text) {
+    if (!text) return "";
+    return String(text)
+      .replace(/\\/g, "\\\\")
+      .replace(/\n/g, "\\n")
+      .replace(/,/g, "\\,")
+      .replace(/;/g, "\\;");
+  }
+
+  // RFC 5545 §3.1 line folding: lines >75 octets split with CRLF + space.
+  function foldIcsLine(line) {
+    if (line.length <= 75) return line;
+    const chunks = [];
+    let i = 0;
+    while (i < line.length) {
+      chunks.push((i === 0 ? "" : " ") + line.slice(i, i + (i === 0 ? 75 : 74)));
+      i += i === 0 ? 75 : 74;
+    }
+    return chunks.join("\r\n");
+  }
+
+  // "Harvey West Park, 123 Main St, …" — whichever fields exist.
+  function formatLocation(evt) {
+    const parts = [];
+    if (evt.locationName) parts.push(evt.locationName);
+    if (evt.location) parts.push(evt.location);
+    return parts.join(", ");
+  }
+
+  // URL-safe slug for filenames and UIDs.
+  function slugify(text) {
+    return String(text || "event")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 50) || "event";
+  }
+
+  // Calendar event titles are namespaced so they're recognizable in a
+  // crowded calendar. Card display titles are unchanged.
+  function calTitle(evt) {
+    return `Vampires MC - ${evt.title || "Event"}`;
+  }
+
+  function buildGoogleCalUrl(evt) {
+    const start = toCalDateTime(evt.startDate, evt.startTime);
+    const end = toCalDateTime(evt.endDate || evt.startDate, evt.endTime);
+    const details = [evt.description, evt.url].filter(Boolean).join("\n\n");
+    const params = new URLSearchParams({
+      action: "TEMPLATE",
+      text: calTitle(evt),
+      dates: `${start}/${end}`,
+      details,
+      location: formatLocation(evt),
+      ctz: "America/Los_Angeles",
+    });
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  }
+
+  function buildIcsDataUrl(evt) {
+    const start = toCalDateTime(evt.startDate, evt.startTime);
+    const end = toCalDateTime(evt.endDate || evt.startDate, evt.endTime);
+    const uid = `${slugify(evt.title)}-${evt.startDate || ""}@vampiresmc.com`;
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    const dtstamp =
+      `${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}` +
+      `T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}Z`;
+    const lines = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Vampires MC//vampiresmc.com//EN",
+      "CALSCALE:GREGORIAN",
+      "BEGIN:VEVENT",
+      `UID:${uid}`,
+      `DTSTAMP:${dtstamp}`,
+      `DTSTART;TZID=America/Los_Angeles:${start}`,
+      `DTEND;TZID=America/Los_Angeles:${end}`,
+      `SUMMARY:${escapeIcs(calTitle(evt))}`,
+      `DESCRIPTION:${escapeIcs(evt.description || "")}${evt.url ? `\\n\\n${escapeIcs(evt.url)}` : ""}`,
+      `LOCATION:${escapeIcs(formatLocation(evt))}`,
+    ];
+    if (evt.url) lines.push(`URL:${evt.url}`);
+    lines.push("END:VEVENT", "END:VCALENDAR");
+    const ics = lines.map(foldIcsLine).join("\r\n");
+    return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
+  }
+
   function renderEventCard(evt) {
     const start = parseLocalDate(evt.startDate);
     const end = parseLocalDate(evt.endDate) || start;
@@ -305,11 +416,31 @@
     date.textContent = formatDateRange(start, end);
     body.appendChild(date);
 
-    if (evt.location) {
-      const loc = document.createElement("p");
-      loc.className = "event-card-location";
-      loc.textContent = evt.location;
-      body.appendChild(loc);
+    const displayName = evt.locationName || evt.location;
+    if (displayName) {
+      const locName = document.createElement("p");
+      locName.className = "event-card-location-name";
+      if (evt.location) {
+        const mapLink = document.createElement("a");
+        mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(evt.location)}`;
+        mapLink.target = "_blank";
+        mapLink.rel = "noopener noreferrer";
+        mapLink.textContent = displayName;
+        locName.appendChild(mapLink);
+      } else {
+        locName.textContent = displayName;
+      }
+      body.appendChild(locName);
+    }
+
+    if (evt.startTime) {
+      const ksu = document.createElement("p");
+      ksu.className = "event-card-ksu";
+      const meet = formatTime12(evt.startTime);
+      ksu.textContent = evt.ksuTime
+        ? `Meet ${meet} · KSU ${formatTime12(evt.ksuTime)}`
+        : `Meet ${meet}`;
+      body.appendChild(ksu);
     }
 
     if (evt.description) {
@@ -319,6 +450,9 @@
       body.appendChild(desc);
     }
 
+    const actions = document.createElement("div");
+    actions.className = "event-card-actions";
+
     if (evt.url) {
       const link = document.createElement("a");
       link.className = "btn btn-primary";
@@ -326,8 +460,64 @@
       link.target = "_blank";
       link.rel = "noopener noreferrer";
       link.textContent = "More Info";
-      body.appendChild(link);
+      actions.appendChild(link);
     }
+
+    if (evt.startTime && evt.endTime && evt.startDate) {
+      const details = document.createElement("details");
+      details.className = "event-card-cal";
+
+      const summary = document.createElement("summary");
+      summary.className = "btn btn-primary";
+      summary.setAttribute("aria-label", "Add to calendar");
+      summary.title = "Add to calendar";
+      const icon = document.createElement("i");
+      icon.className = "fa-regular fa-calendar-plus";
+      icon.setAttribute("aria-hidden", "true");
+      summary.appendChild(icon);
+      details.appendChild(summary);
+
+      const menu = document.createElement("div");
+      menu.className = "event-card-cal-menu";
+
+      const gcal = document.createElement("a");
+      gcal.href = buildGoogleCalUrl(evt);
+      gcal.target = "_blank";
+      gcal.rel = "noopener noreferrer";
+      gcal.textContent = "Google Calendar";
+      menu.appendChild(gcal);
+
+      const icsUrl = buildIcsDataUrl(evt);
+      const icsName = `vampiresmc-${slugify(evt.title)}.ics`;
+
+      const apple = document.createElement("a");
+      apple.href = icsUrl;
+      apple.download = icsName;
+      apple.textContent = "Apple Calendar";
+      menu.appendChild(apple);
+
+      const outlook = document.createElement("a");
+      outlook.href = icsUrl;
+      outlook.download = icsName;
+      outlook.textContent = "Outlook";
+      menu.appendChild(outlook);
+
+      details.appendChild(menu);
+
+      // Position the fixed menu relative to the summary button on open,
+      // and close when clicking outside.
+      details.addEventListener("toggle", () => {
+        if (!details.open) return;
+        const r = summary.getBoundingClientRect();
+        menu.style.top = `${r.bottom + 4}px`;
+        menu.style.right = `${window.innerWidth - r.right}px`;
+        menu.style.left = "auto";
+      });
+
+      actions.appendChild(details);
+    }
+
+    if (actions.childNodes.length > 0) body.appendChild(actions);
 
     card.appendChild(body);
     return card;
@@ -369,6 +559,13 @@
       const frag = document.createDocumentFragment();
       upcoming.forEach(({ evt }) => frag.appendChild(renderEventCard(evt)));
       listEl.appendChild(frag);
+
+      // Close any open calendar dropdown when clicking outside it.
+      document.addEventListener("click", (e) => {
+        listEl.querySelectorAll(".event-card-cal[open]").forEach((d) => {
+          if (!d.contains(e.target)) d.open = false;
+        });
+      });
     } catch (_) {
       showEmpty();
     }
