@@ -479,6 +479,7 @@
 
       const menu = document.createElement("div");
       menu.className = "event-card-cal-menu";
+      menu.hidden = true;
 
       const gcal = document.createElement("a");
       gcal.href = buildGoogleCalUrl(evt);
@@ -502,16 +503,21 @@
       outlook.textContent = "Outlook";
       menu.appendChild(outlook);
 
-      details.appendChild(menu);
+      // Append menu to <body> so it escapes all stacking contexts
+      // (backdrop-filter on .event-card creates a containing block
+      // that traps position:fixed children).
+      document.body.appendChild(menu);
 
-      // Position the fixed menu relative to the summary button on open,
-      // and close when clicking outside.
       details.addEventListener("toggle", () => {
-        if (!details.open) return;
-        const r = summary.getBoundingClientRect();
-        menu.style.top = `${r.bottom + 4}px`;
-        menu.style.right = `${window.innerWidth - r.right}px`;
-        menu.style.left = "auto";
+        if (details.open) {
+          const r = summary.getBoundingClientRect();
+          menu.style.top = `${r.bottom + 4}px`;
+          menu.style.right = `${window.innerWidth - r.right}px`;
+          menu.style.left = "auto";
+          menu.hidden = false;
+        } else {
+          menu.hidden = true;
+        }
       });
 
       actions.appendChild(details);
@@ -561,9 +567,16 @@
       listEl.appendChild(frag);
 
       // Close any open calendar dropdown when clicking outside it.
-      document.addEventListener("click", (e) => {
+      // Menu lives in <body>, so check both the <details> and the menu.
+      // Use mousedown instead of click so the handler fires before the
+      // summary's default toggle action, avoiding a race where the same
+      // click opens the details then immediately closes it.
+      document.addEventListener("mousedown", (e) => {
         listEl.querySelectorAll(".event-card-cal[open]").forEach((d) => {
-          if (!d.contains(e.target)) d.open = false;
+          const menu = document.body.querySelector(".event-card-cal-menu:not([hidden])");
+          if (!d.contains(e.target) && (!menu || !menu.contains(e.target))) {
+            d.open = false;
+          }
         });
       });
     } catch (_) {

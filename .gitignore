@@ -28,7 +28,8 @@ yarn.lock
 pnpm-lock.yaml
 
 # SCSS source maps (compiled CSS is kept, maps are not)
-*.css.map
+**/*.css.map
+**/*.css
 
 # Environment
 .env

@@ -59,9 +59,6 @@
   &:hover {
     border-color: $color-accent;
   }
-  &:has(.event-card-cal[open]) {
-    z-index: 20;
-  }
 }
 
 .event-card-img {
